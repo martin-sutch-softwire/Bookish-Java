@@ -1,13 +1,13 @@
 package org.softwire.training.bookish.models.database;
 
 public class Book {
-    private int book_id;
+    private int bookId;
     private String title;
     private String author;
     private String isbn ;
 
-    public int getBook_id() { return book_id; }
-    public void setBook_id(int book_id) { this.book_id = book_id; }
+    public int getBookId() { return bookId; }
+    public void setBookId(int bookId) { this.bookId = bookId; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
     public String getAuthor() { return author; }
@@ -15,14 +15,11 @@ public class Book {
     public String getIsbn() { return isbn; }
     public void setIsbn(String isbn) { this.isbn = isbn; }
 
+
+
     @Override
     public String toString() {
-        return book_id + " " + title + " " + author + " " + isbn;
+        String myStr = "%s %s %s %s";
+        return String.format(myStr, bookId, title, author, isbn);
     }
-//    public Book(int book_id, String title, String author, String isbn) {
-//        this.book_id = book_id;
-//        this.title = title;
-//        this.author = author;
-//        this.isbn = isbn;
-//    }
 }
