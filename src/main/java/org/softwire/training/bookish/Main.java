@@ -1,14 +1,18 @@
 package org.softwire.training.bookish;
 
 import org.jdbi.v3.core.Jdbi;
+import org.softwire.training.bookish.models.database.Book;
 
 import java.sql.*;
+import java.util.List;
 
 
 public class Main {
 
     public static void main(String[] args) throws SQLException {
         String hostname = "localhost";
+//        String hostname = "10.211.12.255"; // Stephanie's IP
+//        String hostname = "10.211.13.23"; // Martin's IP
         String database = "bookish";
         String user = "bookish";
         String password = "bookish";
@@ -30,11 +34,11 @@ public class Main {
         try  (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                int book_id = resultSet.getInt("book_id");
+                int bookId = resultSet.getInt("book_id");
                 String title = resultSet.getString("title");
                 String author = resultSet.getString("author");
                 String isbn = resultSet.getString("isbn");
-                System.out.println(book_id + " " + title + " " + author + " " + isbn);
+                System.out.println(bookId + " " + title + " " + author + " " + isbn);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -50,8 +54,12 @@ public class Main {
         // Use the "Book" class that we've created for you (in the models.database folder)
 
         Jdbi jdbi = Jdbi.create(connectionString);
+        List<Book> books = jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM bookish.books")
+                        .mapToBean(Book.class)
+                        .list()
+        );
 
-
-
+        books.forEach(System.out::println);
     }
 }
