@@ -16,7 +16,7 @@ public class Main {
         String database = "bookish";
         String user = "bookish";
         String password = "bookish";
-        String connectionString = "jdbc:mysql://" + hostname + "/" + database + "?user=" + user + "&password=" + password + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT";
+        String connectionString = "jdbc:mysql://" + hostname + "/" + database + "?allowPublicKeyRetrieval=true&user=" + user + "&password=" + password + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT";
 
         jdbcMethod(connectionString);
         jdbiMethod(connectionString);
