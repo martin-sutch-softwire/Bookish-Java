@@ -5,9 +5,7 @@ import org.softwire.training.bookish.models.page.CataloguePageModel;
 import org.softwire.training.bookish.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -35,6 +33,12 @@ public class CatalogueController {
         return new ModelAndView("catalogue", "model", cataloguePageModel);
     }
 
+    @GetMapping("/{bookId}")
+    ModelAndView bookDetail(@PathVariable int bookId) {
+        Book book = bookService.getBook(bookId);
+        return new ModelAndView("bookdetail", "book", book);
+    }
+
     @RequestMapping("/add-book")
     RedirectView addBook(@ModelAttribute Book book) {
 
@@ -43,7 +47,14 @@ public class CatalogueController {
         return new RedirectView("/catalogue");
     }
 
-    @RequestMapping("/delete-book")
+    @PostMapping("/{bookId}/edit")
+    RedirectView editBook(@PathVariable int bookId, @ModelAttribute Book book) {
+        book.setBookId(bookId);
+        bookService.updateBook(book);
+        return new RedirectView("/catalogue/" + bookId);
+    }
+
+    @PostMapping("/delete-book")
     RedirectView deleteBook(@RequestParam int bookId) {
 
         bookService.deleteBook(bookId);

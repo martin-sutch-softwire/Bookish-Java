@@ -25,7 +25,7 @@
                     <span th:text="${book.title}" class="bold" />
                     <span th:text="${book.author}" />
 
-                    <a th:href="${'/catalogue/delete-book?bookId=' + book.bookId}" class="delete-button">delete</a>
+                    <a th:href="@{'/catalogue/' + ${book.bookId}}" class="view-button">View</a>
                 </div>
             </div>
 
